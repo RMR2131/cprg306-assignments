@@ -1,13 +1,10 @@
-"use client";
-
 import React, { useState } from 'react';
 import Item from './item';
-import itemsData from './items.json';
 
-export default function ItemList() {
+export default function ItemList({ items }) {
   const [sortBy, setSortBy] = useState('name');
 
-  const sortedItems = [...itemsData].sort((a, b) => {
+  const sortedItems = [...items].sort((a, b) => {
     if (a[sortBy] < b[sortBy]) {
       return -1;
     }
@@ -17,12 +14,20 @@ export default function ItemList() {
     return 0;
   });
 
+  const handleSortByName = () => {
+    setSortBy('name');
+  };
+
+  const handleSortByCategory = () => {
+    setSortBy('category');
+  };
+
   return (
     <div>
       <div className="sorting-buttons">
         Sort by:
         <button
-          onClick={() => setSortBy('name')}
+          onClick={handleSortByName}
           style={{
             backgroundColor: sortBy === 'name' ? 'yellow' : 'white',
             marginRight: '20px',
@@ -34,7 +39,7 @@ export default function ItemList() {
           Name
         </button>
         <button
-          onClick={() => setSortBy('category')}
+          onClick={handleSortByCategory}
           style={{
             backgroundColor: sortBy === 'category' ? 'yellow' : 'white',
             padding: '12px 45px',
